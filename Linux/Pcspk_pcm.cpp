@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include <sched.h>
 #include <errno.h>
+#include <unistd.h>
 
 static inline uint64_t rdtscp_( uint32_t & aux )
 {
@@ -33,7 +34,7 @@ const uint8_t PITCONTROL = 0x43;
 const uint8_t PITCHANNEL2 = 0x42;
 //const int max_duty_cycles = 8000;
 //const int max_duty_cycles = 5500;
-uint32_t max_duty_cycles = 76000;
+uint32_t max_duty_cycles = 30000;
 const int experimental = 2;
 
 void InitIO()
@@ -93,10 +94,16 @@ void RestoreIO()
 
 int main(int argc, char* argv[])
 {
+	uint64_t before = rdtscp();
+	sleep(2);
+	uint64_t after = rdtscp();
+
+	max_duty_cycles = (after-before)/44100/2;
+
 	printf("1\n");
 	InitIO();
 	
-	std::ifstream file("outraw_8bit_44100.raw", std::ios::binary | std::ios::ate);
+	std::ifstream file("/home/nkp123/PCSPK_pcm/Linux/raw_8bit_44100.raw", std::ios::binary | std::ios::ate);
 	std::streamsize size = file.tellg();
 	file.seekg(0, std::ios::beg);
 	printf("2\n");
