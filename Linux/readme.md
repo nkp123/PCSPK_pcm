@@ -12,7 +12,7 @@ Sounds okay when not much is going on in the background. To improve the sound yo
 - Set CPU affinity to only one core. Some cores will behave better than others. In my case CPU1 yields good results.
 - Use real-time scheduling (probably SCHED\_FIFO is the best) and set high priority (ex. sched\_priority to 32).
 - Disable CPU frequency scaling.
-- Isolate specified core from the scheduler: https://wiki.linuxfoundation.org/realtime/documentation/howto/tools/cpu-partitioning/isolcpus
+- Isolate specified core from the scheduler: https://wiki.linuxfoundation.org/realtime/documentation/howto/tools/cpu-partitioning/isolcpus . This *should* yield good results.
 - Terminate GUI.
 - Switch to single-user mode, with ```init 1```.
 
